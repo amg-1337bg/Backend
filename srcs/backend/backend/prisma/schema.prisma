@@ -1,0 +1,128 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  login String @unique
+  username String @unique
+  avatar String @unique
+  email String @unique
+  twoFactorAuthentication String?
+  losses Int @default (0)
+  wins Int @default (0)
+  ladder_level Int @default (0)
+  tfaEnabled Boolean @default (false)
+  users_room Users_room[]
+  room Room[]
+  directmsg DirectMessage[] @relation("user1")
+  dm DirectMessage[] @relation("user2")
+  msg_room MessageRoom[] @relation("from")
+  avatars MessageRoom[]  @relation("pic")
+  userachiev UserAchiev[]
+  invit_friend Invitationfriend[] @relation("id_user_sender")
+  invit_fr Invitationfriend[] @relation("id_user_receiver")
+  friend Friendship[] @relation("id_user_1")
+  friend_rel Friendship[] @relation("id_user_2")
+  match_hist1 match_history[] @relation("winner_id")
+  match_hist2 match_history[] @relation("loser_id")
+}
+
+model Users_room {
+  id Int @id @default(autoincrement())
+  user_id String
+  user User @relation(fields: [user_id], references: [login], onDelete: Cascade, onUpdate: Cascade)
+  user_role String
+  room_id String
+  room Room @relation(fields: [room_id], references: [name], onDelete: Cascade, onUpdate: Cascade)
+  state_user String
+  @@unique([user_id, room_id])
+}
+
+model Room {
+  id Int @id @default(autoincrement())
+  name String @unique
+  type String
+  password String?
+  owner String
+  user User @relation(fields: [owner], references: [login], onDelete: Cascade, onUpdate: Cascade)
+  users_room Users_room[]
+  msg_room MessageRoom[]
+}
+
+model DirectMessage {
+  id Int @id @default(autoincrement())
+  creationDate DateTime @default(now())
+  from String
+  user1 User @relation("user1", fields: [from], references: [login], onDelete: Cascade, onUpdate: Cascade)
+  to String
+  user2 User @relation("user2", fields: [to], references: [login], onDelete: Cascade, onUpdate: Cascade)
+  content_msg String
+}
+
+model MessageRoom {
+  id Int @id @default(autoincrement())
+  creationDate DateTime @default(now())
+  from String
+  user User @relation("from", fields: [from], references: [login], onDelete: Cascade, onUpdate: Cascade)
+  room_name String
+  avatar String
+  picture User @relation("pic", fields: [avatar], references: [avatar], onDelete: Cascade, onUpdate: Cascade)
+  room Room @relation(fields: [room_name], references: [name], onDelete: Cascade, onUpdate: Cascade)
+  content_msg String
+}
+
+model Friendship {
+  id Int @id @default(autoincrement())
+  id_user_1 String
+  user1 User @relation("id_user_1", fields: [id_user_1], references: [login], onDelete: Cascade, onUpdate: Cascade)
+  id_user_2 String
+  user2 User @relation("id_user_2", fields: [id_user_2], references: [login], onDelete: Cascade, onUpdate: Cascade)
+  stat_block Boolean @default(false)
+  type String
+  check_im Boolean @default(false)
+}
+
+model Invitationfriend {
+  // id Int @id @default(autoincrement())
+  id_user_sender String
+  user1 User @relation("id_user_sender", fields: [id_user_sender], references: [login], onDelete: Cascade, onUpdate: Cascade)
+  id_user_receiver String
+  user2 User @relation("id_user_receiver", fields: [id_user_receiver], references: [login], onDelete: Cascade, onUpdate: Cascade)
+  @@id ([id_user_sender, id_user_receiver])
+}
+
+model UserAchiev {
+  achie_id Int
+  achievement Achievement @relation(fields: [achie_id], references: [achiev_id], onDelete: Cascade, onUpdate: Cascade)
+  user_id String
+  user User @relation(fields: [user_id], references: [login], onDelete: Cascade, onUpdate: Cascade)
+  @@id ([achie_id, user_id])
+}
+
+model Achievement {
+  achiev_id Int @id @default(autoincrement())
+  name String
+  description String
+  user_achiev UserAchiev[]
+}
+
+model match_history {
+  match_id Int @id @default(autoincrement())
+  mod String
+  match_date DateTime
+  winner_id String
+  user1 User @relation("winner_id", fields: [winner_id], references: [login], onDelete: Cascade, onUpdate: Cascade)
+  loser_id String
+  user2 User @relation("loser_id", fields: [loser_id], references: [login], onDelete: Cascade, onUpdate: Cascade)
+  score_winner Int
+  score_loser Int
+}

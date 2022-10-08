@@ -1,0 +1,8 @@
+node_modules
+
+dist
+.idea
+./server/.env
+.env
+server/dist
+package-lock.json
