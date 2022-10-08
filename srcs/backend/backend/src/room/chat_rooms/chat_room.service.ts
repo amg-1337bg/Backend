@@ -9,36 +9,29 @@ export class ChatRoomService {
 
     async add_user_to_room(infos: dto_global)
     {
-        const name_user = await this.prisma.user.findFirst({
-          where:{
-              username: infos.from
+        let new_join = await this.prisma.users_room.findFirst({
+          where: {
+            user_id: infos.from,
+            room_id : infos.to,
+            
           }
-        });
-        if (name_user)
-        {
-          const new_join = await this.prisma.users_room.findFirst({
-            where: {
-              user_id: name_user.login,
+      });
+      if (new_join && (new_join.state_user === "banned" || new_join.state_user === "kicked"))
+          return null;
+      if (new_join === null)
+      {
+          new_join = await this.prisma.users_room.create({
+            data:
+            { 
+              user_id: infos.from,
+              user_role: "user", 
               room_id : infos.to,
+              state_user: ""
             }
-          });
-          if (new_join && (new_join.state_user === "banned" || new_join.state_user === "kicked"))
-              return null;
-          if (!new_join)
-          {
-              const new_join1 = await this.prisma.users_room.create({
-                data:
-                { 
-                  user_id: name_user.login,
-                  user_role: "user", 
-                  room_id : infos.to,
-                  state_user: ""
-                }
-              });
-            return (new_join1);  
-          }
-        
+          }); 
       }
+
+      return (new_join);
     }
     async BlockedMe(user :string)
     {
@@ -337,6 +330,39 @@ export class ChatRoomService {
         }
       });
       return (check);
+    }
+
+    async add_user_to_room1(infos: dto_global)
+    {
+        const name_user = await this.prisma.user.findFirst({
+          where:{
+              username: infos.from
+          }
+        });
+        if (name_user)
+        {
+          const new_join = await this.prisma.users_room.findFirst({
+            where: {
+              user_id: name_user.login,
+              room_id : infos.to,
+            }
+          });
+          if (new_join && (new_join.state_user === "banned" || new_join.state_user === "kicked"))
+              return null;
+          if (!new_join)
+          {
+              const new_join1 = await this.prisma.users_room.create({
+                data:
+                { 
+                  user_id: name_user.login,
+                  user_role: "user", 
+                  room_id : infos.to,
+                  state_user: ""
+                }
+              });
+            return (new_join1);
+          }
+      }
     }
   
 }

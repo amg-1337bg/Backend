@@ -62,7 +62,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect{
 						if (this.gameService.getRoom(temp).interupted === false)
 						{
 							this.gameService.setStart(temp);
-							console.log(`Game :  ${temp} started ${this.gameService.getRoom(temp).started}`);
 						}
 						else
 							this.gameOver(temp);
@@ -95,7 +94,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect{
 					if (this.gameService.getRoom(temp).interupted === false)
 					{
 						this.gameService.setStart(temp);
-						console.log(`Game :  ${temp} started ${this.gameService.getRoom(temp).started}`);
 					}
 					else
 						this.gameOver(temp);
@@ -133,7 +131,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect{
 						if (this.gameService.getRoom2(temp).interupted === false)
 						{
 							this.gameService.setStart2(temp);
-							console.log(`Game :  ${temp} started ${this.gameService.getRoom2(temp).started}`);
 						}
 						else
 							this.gameOver2(temp);
@@ -166,7 +163,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect{
 					if (this.gameService.getRoom2(temp)?.interupted === false)
 					{
 						this.gameService.setStart2(temp);
-						console.log(`Game :  ${temp} started ${this.gameService.getRoom2(temp).started}`);
 					}
 					else
 						this.gameOver2(temp);
@@ -398,7 +394,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect{
 		delete this.players[game.P1.id];
 		delete this.players[game.P2.id];
 		this.gameService.remove(index);
-		console.log("game over ", index);
 	}
 	
 	async gameOver2(index: string) {
@@ -431,7 +426,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect{
 		delete this.players2[game.P1.id];
 		delete this.players2[game.P2?.id];
 		this.gameService.remove2(index);
-		console.log("game over 2", index);
 	}
 
 	@Interval(1000 / 40)

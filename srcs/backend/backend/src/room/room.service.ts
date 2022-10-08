@@ -132,12 +132,9 @@ export class RoomService {
 					state_user : "",
 				}
 				});
-				console.log("correct password");
-
 				return {"status" : true, "msg" : `you are now user  at room ${infos.room_id}`}
 			}
 		}
-		console.log("incorrect password");
 		return {"status" : false, "msg" : `incorrect password for  ${infos.room_id}`};
 	}
 	/***************************************************************************/

@@ -17,10 +17,10 @@ services:
       - "3333:3333"
     volumes:
       - ./srcs/backend/backend:/backend
-#
-#  frontend:
-#    build: ./srcs/frontend/.
-#    ports:
-#      - "3000:3000"
-#    volumes:
-#      -
+
+  frontend:
+    build: ./srcs/frontend/.
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./srcs/frontend/frontend:/frontend

@@ -4,6 +4,7 @@ import { authenticator } from 'otplib';
 import { toFileStream } from 'qrcode';
 import { JwtService } from "@nestjs/jwt";
 import * as Process from "process";
+import {reportUnhandledError} from "rxjs/internal/util/reportUnhandledError";
 
 @Injectable()
 export class TwofactorauthService {
@@ -52,7 +53,8 @@ export class TwofactorauthService {
     const user = await this.findUser(userId);
     if (!user)
       throw new HttpException("There is no player with this id", HttpStatus.NOT_FOUND);
-    console.log("code", tfaCode , "secret", user.twoFactorAuthentication);
+    if (user.tfaEnabled)
+      throw new HttpException("2FA already enabled", HttpStatus.FORBIDDEN);
     const isValid = this.validate(tfaCode, user.twoFactorAuthentication)
     if (!isValid)
       throw new HttpException("The Code is incorrect", HttpStatus.FORBIDDEN);

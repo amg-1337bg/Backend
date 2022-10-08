@@ -29,7 +29,6 @@ export class RoomController {
     @Get('/All_rooms_of_user')
     get_rooms(@Req() req)
     {
-        console.log(req.user);
         return this.roomService.get_rooms(req.user);
     }
 
@@ -37,7 +36,6 @@ export class RoomController {
     @UseInterceptors(DataRoomInterceptor)
     @Get('/public_room')
     async get_public_room(@Req() req){
-        console.log("PublicRooms");
         return await this.roomService.get_public_room(req.user);
     }
 

@@ -24,7 +24,6 @@ export class DmGateway {
   @SubscribeMessage('join_dm_room')
     async check_room_name(client: Socket, to: dm_to)
     {
-      console.log("joiiiiiiiiiiiin :",to.to);
       let from = client.data.login;
       client.data.to = to.to;
       try
@@ -48,14 +47,6 @@ export class DmGateway {
                   await this.dm_service.update_frienship(from, to.to);
                   this.myMap.set(client.id, {"from": from, "to": to.to, "room": from + '+' + to.to + '+', "room_r": to.to + '+' + from + '+'});
                   client.join(join_name);
-                  // for (let [key, value] of this.myMap)
-                  // {
-                  //   if(value.from === from && value.to === to.to)
-                  //   {
-                  //     console.log("from:" + from + "to:"+ to.to + "key:" + key + "  socket_id " + client.id);
-                  //     // this.server.sockets.sockets.get(key).emit("instant_messaging", {"status": true ,"action": "join",  "msg": "Join Succes",  "from": from, "to": to.to});
-                  //   }
-                  // }
                   this.server.emit("instant_messaging", {"status": true ,"action": "join",  "msg": "Join Succes",  "from": from, "to": to.to})
 
               }
@@ -69,9 +60,6 @@ export class DmGateway {
 
     @SubscribeMessage('dm_message')
     async send_msg(client: Socket, msg: dto_msg_dm){
-
-      console.log("hellooooo from dm_message\n");
-      console.log(msg);
       let from = client.data.login;
       let to = client.data.to;
 
@@ -97,7 +85,6 @@ export class DmGateway {
           if (!check)
           {
               const get_name = await this.dm_service.find_dm_room_name(from, to);
-              console.log("get_name :" + get_name.name);
               if(get_name)
               {
                 await this.dm_service.create_msg(from, to, msg);
@@ -129,7 +116,6 @@ export class DmGateway {
           {
             if(value.from === to  && value.to === from)
             {
-              console.log("from:" + from + "to:"+ to.to + "key:" + key);
               this.server.sockets.sockets.get(key).leave(value.room);
               this.server.sockets.sockets.get(key).leave(value.room_r);
               this.myMap.delete(key);
@@ -141,7 +127,6 @@ export class DmGateway {
           {
             if(value.from === from && value.to === to)
             {
-              console.log("from:" + from + "to:"+ to.to + "key:" + key);
               this.server.sockets.sockets.get(key).leave(value.room);
               this.server.sockets.sockets.get(key).leave(value.room_r);
               this.myMap.delete(key);
@@ -161,7 +146,6 @@ export class DmGateway {
           {
             if(value.from === to  && value.to === from)
             {
-              console.log("from:" + from + "to:"+ to.to + "key:" + key);
               this.server.sockets.sockets.get(key).leave(value.room);
               this.server.sockets.sockets.get(key).leave(value.room_r);
               this.myMap.delete(key);
@@ -175,7 +159,6 @@ export class DmGateway {
               this.server.sockets.sockets.get(key).leave(value.room);
               this.server.sockets.sockets.get(key).leave(value.room_r);
               this.myMap.delete(key);
-              console.log("from:" + from + "to:"+ to.to + "key:" + key);
               this.server.sockets.sockets.get(key).emit("instant_messaging", {"status": true,"action": "block", "msg": `User ${to} blocked with success`, "from": from, "to": to});
             }
           }

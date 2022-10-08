@@ -14,7 +14,7 @@ model User {
   id Int @id @default(autoincrement())
   login String @unique
   username String @unique
-  avatar String @unique
+  avatar String
   email String @unique
   twoFactorAuthentication String?
   losses Int @default (0)
@@ -26,7 +26,6 @@ model User {
   directmsg DirectMessage[] @relation("user1")
   dm DirectMessage[] @relation("user2")
   msg_room MessageRoom[] @relation("from")
-  avatars MessageRoom[]  @relation("pic")
   userachiev UserAchiev[]
   invit_friend Invitationfriend[] @relation("id_user_sender")
   invit_fr Invitationfriend[] @relation("id_user_receiver")
@@ -75,7 +74,6 @@ model MessageRoom {
   user User @relation("from", fields: [from], references: [login], onDelete: Cascade, onUpdate: Cascade)
   room_name String
   avatar String
-  picture User @relation("pic", fields: [avatar], references: [avatar], onDelete: Cascade, onUpdate: Cascade)
   room Room @relation(fields: [room_name], references: [name], onDelete: Cascade, onUpdate: Cascade)
   content_msg String
 }

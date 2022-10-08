@@ -81,7 +81,6 @@ export class ProfileController {
             destination: (req, file, cb) => cb (null, "avatars/"),
             filename(req: any, file: Express.Multer.File, callback: (error: (Error | null), filename: string) => void) {
                 const ext = file.originalname.split(".");
-                // console.log(ext[ext.length - 1]);
                 callback(null, req.user + "." + ext[ext.length - 1]);
             }
         }),
@@ -100,7 +99,6 @@ export class ProfileController {
         if (!file)
             throw new HttpException("Forbidden", HttpStatus.FORBIDDEN);
         const avatarUrl = await this.profileService.change_avatar(req.user, file);
-        console.log("AvatarURL", avatarUrl);
         res.cookie("avatar", avatarUrl);
         res.status(HttpStatus.CREATED).json({"avatar": avatarUrl});
     }
@@ -109,10 +107,6 @@ export class ProfileController {
     async getAvatar(@Req() req, @Res() res, @Param("image") image: string)  {
         const file = await this.profileService.getAvatar(req.user, image);
         file.pipe(res)
-        // return new StreamableFile(file).setErrorHandler(err => {
-        //     if (err)
-        //         console.log("Error", err);
-        // });
     }
 
 }

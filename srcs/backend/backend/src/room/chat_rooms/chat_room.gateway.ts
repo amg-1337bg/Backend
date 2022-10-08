@@ -50,7 +50,6 @@ export class AppGateway {
                 if(!error)
                 {
                     client.join(room);
-                    console.log("user : " , user ,  " joined room : " , room , "!!!!");
                     client.emit("roomsOfUser" , {"status" : true , "action" : "" , "message" : `Join ${room}` , "user" : `${user}`})
                 }
             }
@@ -77,7 +76,6 @@ export class AppGateway {
         let check = this.myMap.get(client.id);
         let error = 0;
         try {
-           console.log("room_id : " , check.room_id , "check.user_role : " ,check.user_role);
             if(typeof check !== "undefined" && check.user_id === user && check.room_id === room && check.user_role === "owner")
             {
                 if(await this.chatroomservice.setAdmin(infos, room))
@@ -295,7 +293,6 @@ export class AppGateway {
         const  room = client.data.current_room;
         const check = this.myMap.get(client.id);
         let error = 0;
-        console.log("msg.avatar : " , msg.avatar);
         try
         {
             if(typeof check !== "undefined" && check.user_id === user && check.room_id === room )
@@ -303,7 +300,7 @@ export class AppGateway {
                 if (await this.chatroomservice.add_msg_room(user, room, msg)) /* send avatar in message */
                 {
                     const arr = await this.chatroomservice.BlockedMe(user);
-
+                    console.log("avataaar : ", msg.avatar);
                   if(arr.length === 0)
                   {
                       this.server.to(room).emit("msgToClient" ,{ "from" : user , "msg" : msg.msg ,"avatar" : msg.avatar});
@@ -355,11 +352,12 @@ export class AppGateway {
             const check = await this.chatroomservice.check_user_to_invite(invite_dto);
             if (check)
             {
-                const ret = await this.chatroomservice.add_user_to_room({ from: invite_dto.user_to_invite, to: room });
+                const ret = await this.chatroomservice.add_user_to_room1({ from: invite_dto.user_to_invite, to: room });
                 if (ret)
                 {
-                    this.server.to(room).emit("roomsOfUser" ,{"status" : true, "action" : "", "message" : `join ${room} successfully` , "user" : from });
+                    // this.server.to(room).emit("roomsOfUser" ,{"status" : true, "action" : "", "message" : `join ${room} successfully` , "user" : from });
                     // this.server.to(invite_dto.room).emit("usersOfRoom" ,{"status" : true, "message" : "" , "user" : from });
+                    this.server.to(room).emit("UsersOfRoom", {"status" : true , "user" :  from});
                 }
                 else
                     client.emit("roomsOfUser" , {"status" : false ,"action" : "", "message" : "User to invite doesn't exist" , "user" : from}); 
@@ -462,7 +460,6 @@ export class AppGateway {
    
         try 
         {
-           console.log(this.myMap);
             if (typeof check !== "undefined" && check.user_id === user && check.room_id === room)
             {
                 if (await this.chatroomservice.leaveRoom(check.user_role, room, user))
@@ -476,7 +473,6 @@ export class AppGateway {
 
                             if(value.room_id === room)
                             {
-                                console.log("heree leaave");
                                    this.server.sockets.sockets.get(key).leave(room);
                                    this.myMap.delete(key);
                             }
@@ -484,15 +480,12 @@ export class AppGateway {
                         }
 
                     }
-                    console.log("--------------------------------\n");
-                    console.log(this.myMap);
                    this.server.to(room).emit("roomsOfUser" , {"status" : true , "action" : "setAdmin" , "message" :`${user} has left  ${room}` , "user" : `${user}`});
                    this.server.to(room).emit("UsersOfRoom", {"status" : true , "user" :  `${user}`});
               
                     if(role === "owner")
                     {
                         const ret = await this.chatroomservice.getNewOwner(room);
-                        console.log("ret : " , ret) ;
                         if(ret)
                         {
                             
@@ -511,8 +504,6 @@ export class AppGateway {
                             }
                             
                         }
-                        console.log("--------------------------------\n");
-                        console.log(this.myMap);
                     }
                 }
                 else  error = 1 ; /* if the client is not deleted successfully */

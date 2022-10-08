@@ -1,0 +1,458 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+
+  *::-webkit-scrollbar  {
+    width: 10px
+  }
+
+  *::-webkit-scrollbar-track  {
+    background: #E4EFEF
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: #1D388F61;
+    borderRadius: 2px;
+  }
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ::-webkit-scrollbar {
+  display: none;
+} */
+
+.center-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.button-custom {
+  width: 70%;
+  height: 50px;
+  background: linear-gradient(90.01deg, #E39024 -5.18%, #E91035 99.99%);
+  border-radius: 100px;
+}
+
+.button-Auth {
+  height: calc((4vh + 5vw) / 2);
+  background: linear-gradient(90.01deg, #287BF8 -5.18%, #1B0E6A 99.99%);
+  border-radius: 45px;
+}
+
+.button-Auth:hover {
+  background: linear-gradient(90.01deg, #2062c5 -5.18%, #120a48 99.99%);
+  border: 1px solid #0b4078;
+}
+
+.center-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.center-text {
+  font-size: 22px;
+  font-weight: 700;
+
+}
+
+.room-title {
+  display: inline-block;
+  height: 35px;
+  background: #E91E63;
+  border-radius: 45px;
+}
+
+.dot {
+  height: 37px;
+  width: 37px;
+  background-color: #BF360D;
+  border-radius: 50%;
+  display: inline-block;
+  text-align: center;
+
+  border: 2px solid #8941EA;
+  border-radius: '28px'
+}
+
+.dot-nb {
+  height: 20px;
+  width: 20px;
+  background-color: #F86968;
+  border-radius: 50%;
+  display: inline-block;
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* **************** For User ************************ */
+.dot_status {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  display: inline-block;
+  text-align: center;
+}
+
+/* ************************************************** */
+
+.dot-dotted {
+  height: 37px;
+  width: 37px;
+  border-radius: 50%;
+  display: inline-block;
+
+  border: 3px dotted #FFF;
+  border-radius: '28px'
+}
+
+/* *********** Scrooling horizontal **************** */
+.horizontal_slider {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  padding: 25px 0px;
+  box-sizing: border-box;
+}
+
+
+.slider_container {
+  display: block;
+  white-space: nowrap;
+}
+
+.item {
+  display: inline-block;
+  margin-right: 30px;
+}
+
+.item-friend {
+  display: inline-block;
+  margin-right: 30px;
+  margin-bottom: 13px;
+}
+
+.item-live-match {
+  display: inline-block;
+  margin-right: 5.4%;
+  margin-bottom: 4%;
+}
+
+/* ******************* Scrooling Vertical ***************** */
+
+.vertical_slider {
+  display: block;
+  width: 100%;
+  overflow-y: scroll;
+  padding: 25px 0px;
+  box-sizing: border-box;
+}
+
+/* ******************************************************* */
+
+/* ******************* Material Form *********************** */
+
+/* .MaterialForm {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+}
+
+.MaterialForm > form {
+  display: flex;
+  flex-direction: column;
+  background-color: #282948;
+  padding: 32px;
+  min-width: 350px;
+  border-radius: 8px;
+  margin: 32px;
+} */
+
+/* *******************  Form Login Simple *************************** */
+
+/* .enter-username-form{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+} */
+
+.enter-username-form>input {
+  display: inline-block;
+  width: 300px;
+  height: 35px;
+  margin-bottom: 10px;
+  color: #333;
+  padding: 5px 10px;
+  font-size: 1rem;
+}
+
+.enter-username-form>input>placeholder {
+  color: #ccc;
+  font-size: .9rem;
+}
+
+.enter-username-form>button {
+  color: white;
+  font-weight: 300;
+  font-size: 1rem;
+  padding: 7px 35px;
+}
+
+/* ========================= For Match lives =========================================== */
+.red_dot {
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  display: inline-block;
+  text-align: center;
+  background: red;
+}
+
+/* ============================== Make it Golbale !!! =================================== */
+.truncate-typo {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.truncate-typo:hover {
+  overflow: visible;
+}
+
+/* ============================== History =================================== */
+
+.typo-table-history {
+  font-weight: 500;
+  font-size: 18px;
+  text-align: center;
+}
+
+/* ============================ User Stats =================================== */
+
+.global-score {
+  font-style: normal;
+  display: inline;
+  font-weight: 600;
+  font-size: 23px;
+  line-height: 109.52%;
+}
+
+/* ============================== Spin rotate ================================== */
+
+/* .spin {
+  cursor: pointer;
+} */
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(2520deg);
+  }
+}
+
+.spin.animated {
+  animation-duration: 1s;
+  animation-name: spin;
+  animation-duration: 2800ms;
+  animation-iteration-count: 1;
+  animation-timing-function: ease;
+}
+
+/* ========================== Media Query on Chat UI Rooms =========================== */
+@media only screen and (max-width: 1300px) {
+  .users_room {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 870px) {
+  .rooms {
+    display: none;
+  }
+}
+
+/* ========================== Media Query on Chat UI DM =========================== */
+@media only screen and (max-width: 1300px) {
+  .friends {
+    display: none;
+  }
+  .dm_messaging {
+    width: calc(100% - 510px) !important;
+  }
+}
+
+@media only screen and (max-width: 870px) {
+  .dm_messaging {
+    display: none;
+  }
+}
+/* ==============================  ================================== */
+
+.inviteGame{
+  width: 400px ;
+  right: 73px;
+  font-family: Lexend;
+}
+.inviteGame p{
+  margin: 10px  auto;
+  color: #000;
+  font-weight: 500;
+}
+.inviteGame div > button {
+  width: 150px;
+  margin: 0 5px 10px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  background: rgb(84, 62, 192, 0.8);
+  color: #fff;
+}
+.inviteGame div > button:hover {
+  cursor: pointer;
+  background: rgb(84, 62, 192);
+}
+
+p.hometitle
+{
+    font-size: calc(33px + (60 - 33) * ((100vw - 480px) / (1600 - 480)));
+    line-height: normal;
+    width: 100%;
+}
+p.hometxt {
+    font-size: calc(18px + (36 - 18) * ((100vw - 480px) / (1600 - 480)));
+    line-height: normal;
+    width: 100%;
+}
+.home-bnt{
+  min-width: 260px;
+}
+.home__container img{
+  width: 350px;
+}
+.loggin-container {
+  width: 90% !important;
+  max-width: 500px;
+  min-width: 320px;
+  margin: 0 auto;
+  padding: 1.5% !important;
+  background: rgba(0 ,0 ,0 , 0.5) !important;
+  border: 1px solid #fff;
+  border-radius: 10px;
+}
+.loggin-container h6
+{
+  font-size: 35px;
+}
+.loggin-container form > label, .loggin-container form > button {
+  width: 100%;
+  color: #fff;
+  background: rgb(153,165,212);
+  background: linear-gradient(90deg, rgba(153,165,212,1) 0%, rgba(84,62,192,1) 100%);
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+.bg-animation {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: 300% 300%;
+  background-image: linear-gradient(
+        -45deg, 
+        rgba(59,173,227,1) 0%, 
+        rgba(87,111,230,1) 25%, 
+        rgba(152,68,183,1) 51%, 
+        rgba(255,53,127,1) 100%
+  );  
+  animation: AnimateBG 20s ease infinite;
+}
+
+@keyframes AnimateBG { 
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@media screen and (min-width: 1600px){
+    p.hometitle {
+        font-size: 60px;
+    }
+    p.hometxt {
+        font-size: 36px;
+    }
+}
+@media screen and (max-width: 1300px){
+  .home-bnt {
+    min-width: 260px !important;
+    font-size: 20px !important;
+    padding: 20px 10px;
+}
+}
+@media screen and (max-width: 480px){
+    p.hometitle {
+        font-size: 33px;
+    }
+    p.hometxt {
+        font-size: 18px;
+    }
+    .home__container img{
+      width: 250px;
+    }
+}
+@media screen and (max-width: 992px){
+    .home__container {
+        width: 90% !important;
+    }
+}

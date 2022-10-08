@@ -17,7 +17,6 @@ export class AuthController {
     @UseFilters(HttpExceptionFilter)
     @Get("success")
     async success(@Req() req, @Res() res) {
-        // console.log("user ", req.user);
         const player = await this.authService.success(req.user);
         res.cookie("Authorization", player.accessToken);
         res.cookie("login", player.player_info.login);

@@ -11,8 +11,6 @@ import {Interval} from "@nestjs/schedule";
 
 @WebSocketGateway({
   cors: {
-    // origin: ['http://localhost:3000'],
-    // ['http://10.11.11.5:3000', "http://10.11.10.11:3000"]
     origin : process.env.ORIGIN,
     credentials: true,
   },
@@ -21,6 +19,7 @@ import {Interval} from "@nestjs/schedule";
 export class StatusGateway implements OnGatewayConnection, OnGatewayDisconnect {
   constructor(private readonly statusService: StatusService) {}
   active_gamers = Object.keys(this.statusService.getInGameUser()).length;
+  online_gamers = Object.keys(this.statusService.getOnlineUser()).length;
 
 
   @WebSocketServer() server: Server;
@@ -46,19 +45,12 @@ export class StatusGateway implements OnGatewayConnection, OnGatewayDisconnect {
   accept_invite(client: Socket, player: data) {
     this.statusService.game_start_preps(client, player);
   }
-  @Interval(3000)
-  handleInterval() {
-    if (Object.keys(this.statusService.getInGameUser()).length !== this.active_gamers) {
-      this.active_gamers = Object.keys(this.statusService.getInGameUser()).length;
-      this.server.emit('new_user', {});
-    }
-  }
 
   @Interval(3000)
   InGameInterval() {
     if (Object.keys(this.statusService.getInGameUser()).length !== this.active_gamers) {
       this.active_gamers = Object.keys(this.statusService.getInGameUser()).length;
-      this.server.emit('in_game', {});
+      this.server.emit('new_user', {});
     }
   }
 }

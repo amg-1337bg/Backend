@@ -15,7 +15,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
         const response = ctx.getResponse<Response>();
         const request = ctx.getRequest<Request>();
         const status = exception.getStatus();
-        console.log("Status ",  status);
 
         if (status === 401){
             // response.header("Access-Control-Allow-Origin", "*");

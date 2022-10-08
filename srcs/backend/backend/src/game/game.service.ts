@@ -153,7 +153,6 @@ export class GameService {
 					]
 				}
 			})
-			// console.log('couuuuuuuunt ' + ach1);
 			if (ach1 > 0)
 				await this.insert_achiev(players[id].login, 1);
 		
